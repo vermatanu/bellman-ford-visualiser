@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bellman-Ford</title>
+     <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>BELLMAN FORD ALGORITHM</h1>
+    <hr noshade>
+    <header>
+        <div>
+            <ul>
+                <li id="button1"><a href="#">Description</a></li>
+                <li id="button2"><a href="#">Visualisation</a></li>
+            </ul>
+        </div>
+        <hr noshade>
+    </header>
+    <!-- div both parts  -->
+    <div class="full">
+        <!--- description tab --->
+        <div class="description">
+            <div class="images"> <img src="bfa1.png" alt="simple graph"> <p>Edges with negative weights in graph.</p> </div>
+            <h2>Shortest Paths</h2>
+            <div class="paragraph">
+                <p>In many applications one wants to obtain the shortest path from a to b.
+                    Depending on the context, the length of the path does not necessarily have to be the length in meter:
+                    One can as well look at the cost of a path – both if we have to pay for using it – or if we receive
+                    some.</p>
+                <p><strong>In general we speak of cost</strong>.
+                    Therefore one assigns cost to each part of the path – also called "edge".</p>
+                <p>Dijkstra's Algorithm computes shortest – or cheapest paths, if all cost are positive numbers.
+                    However, if one allows negative numbers, the algorithm will fail.</p>
+                <p>The Bellman-Ford Algorithm by contrast can also deal with negative cost.</p>
+                <p>These can for example occur when a taxi driver receives more money for a tour than he spends on fuel. If
+                    he does not transport somebody, his cost are positive.</p>
+            </div>
+            <h2>Idea of the Algorithm</h2>
+            <div class="images">
+                <img src="bfa2.png" alt="edge before update"> <p>This edge is a short-cut and can taverse the node in 21.</p>
+                <img src="bfa3.png" alt="edge before update"> <p>Therefore the original cost is replaced by the minimum one i.e. 21.</p>
+            </div>
+            <div class="paragraph">
+                <p>The Bellman-Ford Algorithm computes the <strong>cost</strong> of the cheapest paths from a starting node
+                    to all other nodes in the graph.</p>
+                <p>The algorithm proceeds in an interactive manner, by beginning with the highest estimate of the cost and then
+                    improving it until the cminimum value is found.</p>
+                <p>The first estimate is:</p>
+                <ul>
+                    <li> a. <strong>The starting node has cost 0</strong>, as his distance to itself is obviously 0.
+                    </li><br>
+                    <li> b. <strong>All other node have cost infinity</strong>, which is the worst estimate possible.
+                    </li>
+                </ul>
+                <p>Afterwards, the algorithm checks every edge for the following condition: <strong>Are the cost of the
+                        source of the edge plus the cost for using the edge smaller than the cost of the edge's
+                        target?</strong></p>
+                <p>If this is the case, we have found a <strong>short-cut</strong>: It is more profitable to use the edge
+                    which was just checked, than using the path used so far.
+                    Therefore the cost of the edge's target get updated: They are set to the cost of the source plus the
+                    cost for using the edge (compare example on the right).</p>
+                <p>Looking at all edges of the graph and updating the cost of the nodes.
+                    Unfortunately, it is not sufficient to look at all edges only once.
+                    After the first phase, the cost of all nodes for which the shortest path only uses one edge have been
+                    calculated correctly. After two phases all paths that use at most two edges have been computed
+                    correctly, and so on.</p>
+            </div>
+            <div class="images"> <img src="bfa4.png" alt="graph with weights"> </div> 
+           <div class="paragraph">
+            <p>How many phases ware necessary? To answer this question, the observation that <strong>a shortest path has
+                to use less edges than there are nodes in the graph.</strong>
+            Thus, we need at most one phase less than the number of nodes in the graph. A shortest path that uses
+            more edges than the number of nodes would visit some node twice and thus build a circle.</p>
+           </div>
+            <h2>Construction of the shortest path</h2>
+            <div class="paragraph">
+                <p>Each time when updating the cost of some node, the algorithm saves the edge that was used for the update
+                    as the <strong>predecessor</strong> of the node.</p>
+                <p>At the end of the algorithm, the shortest path to each node can be constructed by going backwards using
+                    the predecessor edges until the starting node is reached.</p>
+            </div>
+            
+        </div>
+        <!---------- visualisation tab --------------- -->
+        <div class="visualisation">
+            <div class="container">
+
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph1.png" alt=""> </div>
+                    <p class="graphs-info">This is the graph for which we are going to visualise the process of the Bellman-Ford algorithm step wise.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph2.png" alt=""> </div>
+                    <p class="graphs-info"> <strong>BEGIN</strong> <br> Selecting the starting node of graph and denoting it by "s".</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph3.png" alt=""> </div>
+                    <p class="graphs-info">Cost for all nodes set as infinite, until they are visited and have been assigned value.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph4.png" alt=""> </div>
+                    <p class="graphs-info">The edge being visited is denoted by a red arrow.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph5.png" alt=""> </div>
+                    <p class="graphs-info">After evaluating, if the cost is minimum till that point of consideration, the edge is denoted in green. <br> The cost for traversing this edge is 20, hence 20 is assigned to the corresponding node. <br> The next node is being visited.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph6.png" alt=""> </div>
+                    <p class="graphs-info">Similarly, the shortest path for each node is being calculated.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph7.png" alt=""> </div>
+                    <p class="graphs-info">Similarly, the shortest path for each node is being calculated.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph8.png" alt=""> </div>
+                    <p class="graphs-info">Similarly, the shortest path for each node is being calculated.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph9.png" alt=""> </div>
+                    <p class="graphs-info">Similarly, the shortest path for each node is being calculated.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph10.png" alt=""> </div>
+                    <p class="graphs-info">Similarly, we will calculate the shortest paths for visiting all nodes from s. <br> Now with the red path we are evaluating whether any improvement is possible in the cost.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph11.png" alt=""> </div>
+                    <p class="graphs-info">Since there was improvement in cost for the node, the value at the node has been replaced by the minimum of both the costs.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph12.png" alt=""> </div>
+                    <p class="graphs-info">Now with the red path we are evaluating whether any improvement is possible in the cost.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph13.png" alt=""> </div>
+                    <p class="graphs-info">Now with the red path we are evaluating whether any improvement is possible in the cost.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph14.png" alt=""> </div>
+                    <p class="graphs-info">Up to now, all shortest paths have been calculated that use at most 2 Edges . Now we will calculate using at most 3 edges.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph15.png" alt=""> </div>
+                    <p class="graphs-info">Now with the red path we are evaluating whether any improvement is possible in the cost.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph16.png" alt=""> </div>
+                    <p class="graphs-info">Now with the red path we are evaluating whether any improvement is possible in the cost.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph17.png" alt=""> </div>
+                    <p class="graphs-info">Since there was improvement in cost for the node, the value at the node has been replaced by the minimum of both the costs.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph18.png" alt=""> </div>
+                    <p class="graphs-info">Now with the red path we are evaluating whether any improvement is possible in the cost.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph19.png" alt=""> </div>
+                    <p class="graphs-info">Similarly, with the red path we will continue to evaluate the rest of the graph for anu possible improvement in cost.</p>
+                </article>
+                <article class="graphs">
+                    <div class="graphs-image"> <img src="graph20.png" alt=""> </div>
+                    <p class="graphs-info">The green edges denote the shortest/least cost paths for traversing the nodes. <br> <strong>END</strong> </p>
+                </article>
+            </div>
+            <div class="btn-container">
+                <button class="prev"> <strong>prev</strong> </button>
+                <button class="next"> <strong>next</strong> </button>
+                <h2>Pseudocode</h2>
+                <p> <strong>BEGIN</strong> <br>
+                    d(v[1]) ← 0 <br>
+                    FOR j = 2,..,n DO <br>
+                     &nbsp &nbsp d(v[j]) ← ∞ <br>
+                    FOR i = 1,..,(|V|-1) DO <br>
+                    &nbsp &nbsp FOR ALL (u,v) in E DO <br>
+                    &nbsp &nbsp &nbsp &nbsp   d(v) ← min(d(v), d(u)+l(u,v)) <br>
+                    FOR ALL (u,v) in E DO <br>
+                    &nbsp &nbsp IF d(v) > d(u) + l(u,v) DO <br>
+                    &nbsp &nbsp Message: "Negative Circle" <br>
+                  <strong>END</strong> <br>
+                  </p>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script src="functions.js"></script>
+</html>
